@@ -55,12 +55,6 @@ $veiculoData = $veiculo->buscarPorId($id);
                 <input type="number" step="0.01" class="form-control" id="preco" name="preco" value="<?= $veiculoData['preco']; ?>" required>
             </div>
 
-            <!-- Ano Fabricado -->
-            <div class="mb-3">
-                <label for="ano_fabricado" class="form-label">Ano de Fabricação</label>
-                <input type="number" class="form-control" id="ano_fabricado" name="ano_fabricado" value="<?php echo $veiculoData['ano_fabricado']; ?>" required>
-            </div>
-
             <!-- Ano Modelo -->
             <div class="mb-3">
                 <label for="ano_modelo" class="form-label">Ano do Modelo</label>
@@ -77,30 +71,6 @@ $veiculoData = $veiculo->buscarPorId($id);
             <div class="mb-3">
                 <label for="cor" class="form-label">Cor</label>
                 <input type="text" class="form-control" id="cor" name="cor" value="<?php echo $veiculoData['cor']; ?>" required>
-            </div>
-
-            <!-- Tipo -->
-            <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo</label>
-                <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $veiculoData['tipo']; ?>" required>
-            </div>
-
-            <!-- Combustível -->
-            <div class="mb-3">
-                <label for="combustivel" class="form-label">Combustível</label>
-                <input type="text" class="form-control" id="combustivel" name="combustivel" value="<?php echo $veiculoData['combustivel']; ?>" required>
-            </div>
-
-            <!-- Chassi -->
-            <div class="mb-3">
-                <label for="chassi" class="form-label">Chassi</label>
-                <input type="text" class="form-control" id="chassi" name="chassi" value="<?php echo $veiculoData['chassi']; ?>" required>
-            </div>
-
-            <!-- RENAVAN -->
-            <div class="mb-3">
-                <label for="renavan" class="form-label">RENAVAN</label>
-                <input type="text" class="form-control" id="renavan" name="renavan" value="<?php echo $veiculoData['renavan']; ?>" required>
             </div>
 
             <!-- Observação -->

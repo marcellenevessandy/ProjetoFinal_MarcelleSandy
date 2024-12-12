@@ -39,56 +39,151 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!-- Bootstrap CSS -->
+    <link rel="shortcut icon" href="./imagens/raposa.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        /* Estilo para o botão de olho */
+        :root {
+            --primary-color: #cb640d;
+            --background-color: #000;
+            --text-color: #ffffff;
+            --link-color: #cb640d;
+            --border-color: #ff7f00;
+            --hover-color: #f9bb64;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding-top: 70px;
+        }
+
+        .navbar {
+            background-color: var(--background-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-color);
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--link-color);
+        }
+
+        .navbar-brand img {
+            max-width: 200px;
+        }
+
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: bold;
+            border-radius: 15px;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--text-color);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .container-login {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 50px;
+            margin-top: 100px;
+            background-color: var(--hover-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-align: center;
+        }
+
         .eye-icon {
             position: absolute;
             top: 10px;
             right: 10px;
             cursor: pointer;
+            color: #000;
         }
 
         .form-control {
-            padding-right: 30px; /* Deixa espaço para o ícone de olho */
+            padding-right: 30px;
+        }
+
+        .btn-warning {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .btn-warning:hover {
+            background-color: var(--hover-color);
+            border-color: var(--hover-color);
+        }
+
+        .textoSobre2 {
+            font-weight: bold;
+            color: #000;
         }
     </style>
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2 class="text-center mb-4">Login</h2>
 
-                <?php
-                if (isset($erro)) {
-                    echo "<div class='alert alert-danger'>$erro</div>";
-                }
-                ?>
-
-                <form method="POST">
-                    <!-- E-mail -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">E-mail</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" required>
-                    </div>
-
-                    <!-- Senha -->
-                    <div class="mb-3 position-relative">
-                        <label for="senha" class="form-label">Senha</label>
-                        <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required>
-                        <i id="eye-icon" class="bi bi-eye eye-icon" onclick="togglePasswordVisibility()"></i>
-                    </div>
-
-                    <!-- Botão de Login -->
-                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
-                </form>
-
+    <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
+        <div class="container">
+            <a class="navbar-brand me-auto" href="./"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto d-flex align-items-center"> 
+                    <li class="nav-item"><a class="nav-link fw-bold" href="index.php"><button class="btn btn-warning fw-bold">VOLTAR</button></a></li>
+                </ul>
             </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="container-login">
+            <h2>Login</h2>
+
+            <?php
+            if (isset($erro)) {
+                echo "<div class='alert alert-danger'>$erro</div>";
+            }
+            ?>
+
+            <form method="POST">
+                <!-- E-mail -->
+                <div class="mb-3">
+                    <label for="email" class="form-label textoSobre2">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" required>
+                </div>
+
+                <!-- Senha -->
+                <div class="mb-3 position-relative">
+                    <label for="senha" class="form-label textoSobre2">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    <i id="eye-icon" class="bi bi-eye eye-icon" onclick="togglePasswordVisibility()"></i>
+                </div>
+
+                <!-- Botão de Login -->
+                <button type="submit" class="btn btn-custom w-100">Entrar</button>
+            </form>
         </div>
     </div>
 

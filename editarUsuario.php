@@ -49,32 +49,120 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Dados de Usuário</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="shortcut icon" href="./imagens/raposa.png" type="image/x-icon">
+    <title>Tenho Interesse</title>
+    <!-- Link do Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        /* Estilo para o botão de olho */
-        .eye-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
+        :root {
+            --primary-color: #cb640d;
+            --background-color: #000;
+            --text-color: #ffffff;
+            --link-color: #cb640d;
+            --border-color: #ff7f00;
+            --hover-color: #f9bb64;
+            --azul-color: #13293e;
         }
 
-        .form-control {
-            padding-right: 30px; /* Deixa espaço para o ícone de olho */
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--background-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-color);
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--link-color);
+        }
+
+        .navbar-brand img {
+            max-width: 200px;
+        }
+
+        .btn-warning {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .btn-warning:hover {
+            background-color: var(--hover-color);
+            border-color: var(--hover-color);
+        }
+
+        .border-bottom {
+            border-color: var(--border-color);
+        }
+
+        .titulo {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: bold;
+            display: inline-block;
+            position: relative;
+        }
+
+        .titulo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        form {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border: none;
+            /* Removida a borda */
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .titulo {
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
+            <div class="container">
+                <a class="navbar-brand me-auto" href="#home"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto d-flex align-items-center"> <!-- Ajustado aqui -->
+                        <li class="nav-item"><a class="nav-link fw-bold" href="index.php"><button class="btn btn-warning fw-bold">VOLTAR</button></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="border-bottom border-2"></div>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2 class="text-center mb-4">Editar Dados de Usuário</h2>
+                
                 <form method="POST">
+                <h2 class="titulo">Editar Dados de Usuário</h2>
                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 
                     <!-- Nome -->
