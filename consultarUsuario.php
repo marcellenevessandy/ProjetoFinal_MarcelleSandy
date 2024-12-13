@@ -61,21 +61,41 @@ $usuarios = $usuario->listarTodos();
             background-color: var(--primary-color);
             border-color: var(--primary-color);
             color: var(--text-color);
+            width: 100%;
         }
+
 
         .btn-warning:hover {
             background-color: var(--hover-color);
             border-color: var(--hover-color);
+        }
+
+        .titulo {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: bold;
+            display: inline-block;
+            position: relative;
+        }
+
+        .titulo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
         }
     </style>
 </head>
 
 <body>
 
-    <header>
+<header>
         <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
             <div class="container">
-                <a class="navbar-brand me-auto" href="#home"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
+                <a class="navbar-brand me-auto" href="portal.php"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
                 <!-- Botão de alternância (hambúrguer) para dispositivos móveis -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -92,6 +112,7 @@ $usuarios = $usuario->listarTodos();
                                 <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
                                 <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
                                 <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
+                                <li><a class="dropdown-item" href="cadastrarVenda.php">Nova Venda</a></li>
                             </ul>
                         </li>
 
@@ -103,6 +124,7 @@ $usuarios = $usuario->listarTodos();
                                 <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
                                 <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
                                 <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
+                                <li><a class="dropdown-item" href="consultarVenda.php">Consultar Venda</a></li>
                             </ul>
                         </li>
 
@@ -115,16 +137,17 @@ $usuarios = $usuario->listarTodos();
                         <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
                         <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
                         <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
+                        <li><a class="dropdown-item" href="cadastrarVenda.php">Novo Venda</a></li>
                         <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
                         <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
                         <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
+                        <li><a class="dropdown-item" href="consultarVendas.php">Consultar Vendas</a></li>
                         <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    
     <div class="container mt-5">
         <h2 class="text-center">Lista de Usuários</h2>
 

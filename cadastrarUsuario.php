@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
 
-    <header>
+<header>
         <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
             <div class="container">
                 <a class="navbar-brand me-auto" href="portal.php"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
@@ -185,15 +185,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
                         <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
                         <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
+                        <li><a class="dropdown-item" href="cadastrarVenda.php">Novo Venda</a></li>
                         <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
                         <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
                         <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
+                        <li><a class="dropdown-item" href="consultarVendas.php">Consultar Vendas</a></li>
                         <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
 
     <div class="container mt-5">
         <div class="row justify-content-center">

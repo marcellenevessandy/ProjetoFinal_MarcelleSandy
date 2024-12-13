@@ -48,7 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $veiculo = new Veiculo($db);
             $veiculo->cadastrar($placa, $modelo, $ano_modelo, $marca, $cor, $observacao, $status, $preco, $filePath);
 
+            // Mensagem de sucesso
             echo '<div class="alert alert-success" role="alert">Veículo cadastrado com sucesso!</div>';
+
+            // Redireciona para portal.php
+            header('Location: portal.php');
+            exit();
         } else {
             throw new Exception("Nenhuma imagem foi enviada ou ocorreu um erro no upload.");
         }
@@ -180,15 +185,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
                         <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
                         <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
+                        <li><a class="dropdown-item" href="cadastrarVenda.php">Novo Venda</a></li>
                         <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
                         <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
                         <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
+                        <li><a class="dropdown-item" href="consultarVendas.php">Consultar Vendas</a></li>
                         <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
 
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -264,12 +272,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         </div>
                         <br><br>
+                        <!-- Botão de Enviar -->
                         <button type="submit" class="btn btn-warning w-100 fw-bold">Cadastrar</button>
+
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

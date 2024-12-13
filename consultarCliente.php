@@ -24,108 +24,130 @@ $clientes = $cliente->listarTodos();
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .table-container {
-            margin-top: 80px;
+        :root {
+            --primary-color: #cb640d;
+            --background-color: #000;
+            --text-color: #ffffff;
+            --link-color: #cb640d;
+            --border-color: #ff7f00;
+            --hover-color: #f9bb64;
         }
 
-        .table {
-            border-radius: 8px;
-            overflow: hidden;
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding-top: 70px;
         }
 
-        .table th, .table td {
-            text-align: center;
-            vertical-align: middle;
+        .navbar {
+            background-color: var(--background-color);
+            border-bottom: 2px solid var(--border-color);
         }
 
-        .table td {
-            font-size: 14px;
+        .navbar-nav .nav-link {
+            color: var(--text-color);
         }
 
-        .table th {
-            background-color: #cb640d;
-            color: #fff;
-            font-weight: bold;
+        .navbar-nav .nav-link:hover {
+            color: var(--link-color);
         }
 
-        .table-bordered td, .table-bordered th {
-            border: 1px solid #ddd;
-        }
-
-        .table-striped tbody tr:nth-child(odd) {
-            background-color: #f8f9fa;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: #e9ecef;
-        }
-
-        .actions-btn {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .actions-btn a {
-            text-decoration: none;
+        .navbar-brand img {
+            max-width: 200px;
         }
 
         .btn-warning {
-            background-color: #cb640d;
-            border-color: #cb640d;
-            color: #fff;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+            width: 100%;
         }
+
 
         .btn-warning:hover {
-            background-color: #ff7f00;
-            border-color: #ff7f00;
+            background-color: var(--hover-color);
+            border-color: var(--hover-color);
         }
 
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-            color: #fff;
+        .titulo {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: bold;
+            display: inline-block;
+            position: relative;
         }
 
-        .btn-danger:hover {
-            background-color: #c82333;
-            border-color: #c82333;
-        }
-
-        /* Responsividade */
-        @media (max-width: 767px) {
-            .table th, .table td {
-                font-size: 12px;
-                padding: 8px;
-            }
-
-            .actions-btn {
-                flex-direction: column;
-                gap: 5px;
-            }
+        .titulo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
         }
     </style>
 </head>
 
 <body>
-
-    <header>
+<header>
         <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
             <div class="container">
-                <a class="navbar-brand me-auto" href="#home"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
+                <a class="navbar-brand me-auto" href="portal.php"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
+                <!-- Botão de alternância (hambúrguer) para dispositivos móveis -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <!-- Menu Navbar (vai ser colapsado no mobile e expandido no desktop) -->
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="logout.php"><button class="btn btn-warning">SAIR</button></a></li>
+                    <!-- Opções de navegação para o desktop (visível em telas grandes) -->
+                    <ul class="navbar-nav ms-auto d-flex align-items-center d-none d-lg-flex">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Cadastrar
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
+                                <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
+                                <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
+                                <li><a class="dropdown-item" href="cadastrarVenda.php">Nova Venda</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Consultar
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
+                                <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
+                                <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
+                                <li><a class="dropdown-item" href="consultarVenda.php">Consultar Venda</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Sair -->
+                        <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
+                    </ul>
+
+                    <!-- Opções de navegação para o mobile (visível apenas em telas pequenas) -->
+                    <ul class="navbar-nav ms-auto d-flex flex-column d-lg-none">
+                        <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
+                        <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
+                        <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
+                        <li><a class="dropdown-item" href="cadastrarVenda.php">Novo Venda</a></li>
+                        <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
+                        <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
+                        <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
+                        <li><a class="dropdown-item" href="consultarVendas.php">Consultar Vendas</a></li>
+                        <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="container table-container">
+    <div class="container table-container"><br><br><br>
         <h2 class="text-center mb-4">Lista de Clientes</h2>
 
         <table class="table table-striped table-bordered table-hover">

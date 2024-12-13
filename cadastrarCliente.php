@@ -26,12 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Chama a função de cadastro
         $cliente->cadastrar($nome, $email, $telefone, $cpf, $data_nascimento, $cep, $endereco, $numero, $complemento, $bairro, $cidade, $estado);
 
-        echo "Cliente cadastrado com sucesso!"; // Mensagem de sucesso
+        // Redireciona para a página principal em caso de sucesso
+        header("Location: portal.php");
+        exit(); // Garante que nenhuma outra saída seja enviada
     } catch (Exception $e) {
         echo "Erro: " . $e->getMessage(); // Mensagem de erro
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -153,9 +156,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
                         <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
                         <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
+                        <li><a class="dropdown-item" href="cadastrarVenda.php">Novo Venda</a></li>
                         <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
                         <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
                         <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
+                        <li><a class="dropdown-item" href="consultarVendas.php">Consultar Vendas</a></li>
                         <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
                     </ul>
                 </div>

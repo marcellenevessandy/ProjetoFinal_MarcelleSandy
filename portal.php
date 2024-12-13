@@ -120,8 +120,49 @@ if (!isset($_SESSION['usuario_id'])) {
             </div>
         </nav>
     </header>
-
     <div class="border-bottom border-2"></div>
+
+    <main>
+
+        <section id="home">
+            <div class="container mt-5">
+                <br><br>
+
+                <div id="carouselExampleAutoplaying" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <picture>
+                                <source media="(max-width: 768px)" srcset="./imagens/1.png">
+                                <source media="(min-width: 769px)" srcset="./imagens/CARD1.png">
+                                <img src="./imagens/CARD1.png" class="d-block w-100 rounded" alt="Imagem 1">
+                            </picture>
+                        </div>
+                        <div class="carousel-item">
+                            <picture>
+                                <source media="(max-width: 768px)" srcset="./imagens/2.png">
+                                <source media="(min-width: 769px)" srcset="./imagens/CARD2.png">
+                                <img src="./imagens/CARD2.png" class="d-block w-100 rounded" alt="Imagem 2">
+                            </picture>
+                        </div>
+                        <div class="carousel-item">
+                            <picture>
+                                <source media="(max-width: 768px)" srcset="./imagens/3.png">
+                                <source media="(min-width: 769px)" srcset="./imagens/CARD3.png">
+                                <img src="./imagens/CARD3.png" class="d-block w-100 rounded" alt="Imagem 3">
+                            </picture>
+                        </div>
+                    </div>
+
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
