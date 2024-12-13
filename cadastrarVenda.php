@@ -1,278 +1,128 @@
 <?php
-session_start();
-if (!isset($_SESSION['usuario_id'])) {
-    header('Location: login.php');
-    exit();
-}
-
+// Incluir a conexão com o banco e a classe Venda
 include_once './config/config.php';
-include_once './classes/Veiculo.php';
+include_once './classes/Venda.php';
 
+// Criar instância da classe Venda
+$venda = new Venda($db);
+
+// Verificar se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-            // Verificação do tipo MIME da imagem
-            $fileType = mime_content_type($_FILES['imagem']['tmp_name']);
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    $id_cliente = $_POST['id'];
+    $id_veiculo = $_POST['id_veiculo'];
+    $desconto = $_POST['desconto'];
+    $valor_final = $_POST['valor_total'];
+    $data_venda = $_POST['data_venda'];
+    
 
-            if (!in_array($fileType, $allowedTypes)) {
-                throw new Exception("O arquivo enviado não é uma imagem válida.");
-            }
+    $queryVenda = "INSERT INTO vendas (id_cliente, id_veiculo, desconto, valor_final, data_venda) VALUES ('$id_cliente', '$id_veiculo', '$desconto', '$valor_final', '$data_venda')";
+    $resultVenda = mysql_query($queryVenda);
+    
 
-            // Definindo diretório de upload
-            $uploadDir = 'uploads/';
-            $fileName = basename($_FILES['imagem']['name']);
-            $filePath = $uploadDir . uniqid() . '_' . $fileName;
-
-            // Verifica se o diretório de upload existe
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
-
-            // Move o arquivo para o diretório de uploads
-            if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $filePath)) {
-                throw new Exception("Falha ao mover o arquivo de imagem.");
-            }
-
-            // Sanitizando as entradas
-            $placa = htmlspecialchars($_POST['placa']);
-            $modelo = htmlspecialchars($_POST['modelo']);
-            $ano_modelo = (int) $_POST['ano_modelo'];
-            $marca = htmlspecialchars($_POST['marca']);
-            $cor = htmlspecialchars($_POST['cor']);
-            $observacao = htmlspecialchars($_POST['observacao']);
-            $status = $_POST['status'];
-            $preco = (float) $_POST['preco'];
-
-            // Criando objeto Veiculo e cadastrando no banco de dados
-            $veiculo = new Veiculo($db);
-            $veiculo->cadastrar($placa, $modelo, $ano_modelo, $marca, $cor, $observacao, $status, $preco, $filePath);
-
-            echo '<div class="alert alert-success" role="alert">Veículo cadastrado com sucesso!</div>';
-        } else {
-            throw new Exception("Nenhuma imagem foi enviada ou ocorreu um erro no upload.");
-        }
-    } catch (Exception $e) {
-        echo '<div class="alert alert-danger" role="alert">Erro: ' . $e->getMessage() . '</div>';
+    if ($venda->cadastrarVenda($id_cliente, $id_veiculo, $desconto)) {
+        echo "Venda cadastrada com sucesso!";
+    } else {
+        echo "Erro ao cadastrar venda.";
     }
 }
+
+// Consultar os clientes e veículos para preencher os campos
+$sql_clientes = "SELECT * FROM clientes";
+$stmt_clientes = $db->prepare($sql_clientes);
+$stmt_clientes->execute();
+
+$sql_veiculos = "SELECT * FROM veiculos";
+$stmt_veiculos = $db->prepare($sql_veiculos);
+$stmt_veiculos->execute();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./imagens/raposa.png" type="image/x-icon">
-    <title>Cadastrar Veículos</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #cb640d;
-            --background-color: #000;
-            --text-color: #ffffff;
-            --link-color: #cb640d;
-            --border-color: #ff7f00;
-            --hover-color: #f9bb64;
+    <title>Cadastrar Venda</title>
+    <script>
+        function preencherCampos() {
+            const id_veiculo = document.getElementById('id_veiculo').value;
+            const id_cliente = document.getElementById('id_cliente').value;
+
+            if (id_veiculo) {
+                fetch('getVeiculo.php?id_veiculo=' + id_veiculo)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('modelo').value = data.modelo;
+                        document.getElementById('preco').value = data.preco;
+                        calcularTotal(); // Calcular o total ao preencher os dados do veículo
+                    });
+            }
+
+            if (id_cliente) {
+                fetch('getCliente.php?id_cliente=' + id_cliente)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('nome').value = data.nome;
+                        document.getElementById('cpf').value = data.cpf;
+                    });
+            }
         }
 
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            padding-top: 70px;
+        function calcularTotal() {
+            const preco = parseFloat(document.getElementById('preco').value) || 0;
+            const desconto = parseFloat(document.getElementById('desconto').value) || 0;
+            const total = preco - (preco * (desconto / 100));
+            document.getElementById('valor_total').value = total.toFixed(2); // Exibe o valor total com 2 casas decimais
         }
-
-        .navbar {
-            background-color: var(--background-color);
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .navbar-nav .nav-link {
-            color: var(--text-color);
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: var(--link-color);
-        }
-
-        .navbar-brand img {
-            max-width: 200px;
-        }
-
-        .btn-warning {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: var(--text-color);
-            width: 100%;
-        }
-
-
-        .btn-warning:hover {
-            background-color: var(--hover-color);
-            border-color: var(--hover-color);
-        }
-
-        .titulo {
-            color: var(--primary-color);
-            font-size: 2rem;
-            font-weight: bold;
-            display: inline-block;
-            position: relative;
-        }
-
-        .titulo::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--primary-color);
-        }
-    </style>
+    </script>
 </head>
 
-<body>
+<body>//////
+    <? $queryCampos = "SELECT * FROM clientes WHERE id = 5";
+        $resultCampos = mysql_query($queryCampos);
+        while($camposT = mysql_fetch_array($resultCampos)){
+            $nomeCliente = '';
+            $nomeCliente = $camposT['nome'];
+            $modelo = '';
+            $nomeCliente = $camposT['nome'];
+        ?>
+    <h2>Cadastrar Venda</h2>
+    <form method="POST">
+        <label for="id_cliente">Cliente:</label>
+        <select name="id_cliente" id="id_cliente" onchange="preencherCampos()">
+            <option value="">Selecione um Cliente</option>
+            <?php while ($cliente = $stmt_clientes->fetch(PDO::FETCH_ASSOC)): ?>
+                <option value="<?= $cliente['id'] ?>"><?= htmlspecialchars($cliente['nome'], ENT_QUOTES, 'UTF-8') ?></option>
+            <?php endwhile; ?>
+        </select><br><br>
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
-            <div class="container">
-                <a class="navbar-brand me-auto" href="portal.php"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
-                <!-- Botão de alternância (hambúrguer) para dispositivos móveis -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Menu Navbar (vai ser colapsado no mobile e expandido no desktop) -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <!-- Opções de navegação para o desktop (visível em telas grandes) -->
-                    <ul class="navbar-nav ms-auto d-flex align-items-center d-none d-lg-flex">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Cadastrar
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
-                                <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
-                                <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
-                                <li><a class="dropdown-item" href="cadastrarVenda.php">Nova Venda</a></li>
-                            </ul>
-                        </li>
+        <label for="nome">Nome do Cliente:</label>
+        <input type="text" id="nome" disabled <?if($nomeCliente != ''){ echo $nomeCliente; }?>><br><br>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Consultar
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
-                                <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
-                                <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
-                                <li><a class="dropdown-item" href="consultarVenda.php">Consultar Venda</a></li>
-                            </ul>
-                        </li>
+        <label for="cpf">CPF do Cliente:</label>
+        <input type="text" id="cpf" disabled <?if($cpf != ''){ echo $cpf; }?>><br><br>
 
-                        <!-- Sair -->
-                        <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
-                    </ul>
+        <label for="id_veiculo">Veículo:</label>
+        <select name="id_veiculo" id="id_veiculo" onchange="preencherCampos()">
+            <option value="">Selecione um Veículo</option>
+            <?php while ($veiculo = $stmt_veiculos->fetch(PDO::FETCH_ASSOC)): ?>
+                <option value="<?= $veiculo['id'] ?>"><?= $veiculo['modelo'] ?></option>
+            <?php endwhile; ?>
+        </select><br><br>
 
-                    <!-- Opções de navegação para o mobile (visível apenas em telas pequenas) -->
-                    <ul class="navbar-nav ms-auto d-flex flex-column d-lg-none">
-                        <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
-                        <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
-                        <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
-                        <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
-                        <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
-                        <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
-                        <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+        <label for="modelo">Modelo do Veículo:</label>
+        <input type="text" id="modelo" disabled <?if($modelo != ''){ echo $modelo; }?>><br><br>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h2 class="titulo">Cadastro de Veículo</h2><br><br>
+        <label for="preco">Preço do Veículo:</label>
+        <input type="text" id="preco" disabled><br><br>
 
-                <form method="POST" action="cadastrarVeiculo.php" enctype="multipart/form-data">
+        <label for="desconto">Desconto (%):</label>
+        <input type="number" name="desconto" id="desconto" min="0" max="100" onchange="calcularTotal()"><br><br>
 
+        <label for="valor_total">Valor Final:</label>
+        <input type="text" id="valor_total" disabled><br><br>
+        <?}?>
 
-                    <div class="row">
-                        <div class="col">
-                            <!-- Placa -->
-                            <div class="mb-3">
-                                <label for="placa" class="form-label">Placa</label>
-                                <input type="text" class="form-control" id="placa" name="placa" placeholder="Digite a placa" required>
-                            </div>
-
-                            <!-- Modelo -->
-                            <div class="mb-3">
-                                <label for="modelo" class="form-label">Modelo</label>
-                                <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Digite o modelo" required>
-                            </div>
-
-                            <!--Ano Modelo -->
-                            <div class="mb-3">
-                                <label for="ano_modelo" class="form-label">Ano do Modelo</label>
-                                <input type="text" class="form-control" id="modelo" name="ano_modelo" placeholder="Digite o ano modelo" required>
-                            </div>
-
-                            <!-- Imagem -->
-                            <div class="mb-3">
-                                <label for="imagem" class="form-label">Imagem</label>
-                                <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*" required>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <!-- Preço -->
-                            <div class="mb-3">
-                                <label for="preco" class="form-label">Preço</label>
-                                <input type="number" step="0.01" class="form-control" id="preco" name="preco" required>
-                            </div>
-
-                            <!-- Marca -->
-                            <div class="mb-3">
-                                <label for="marca" class="form-label">Marca</label>
-                                <input type="text" class="form-control" id="marca" name="marca" placeholder="Digite a marca" required>
-                            </div>
-
-                            <!-- Cor -->
-                            <div class="mb-3">
-                                <label for="cor" class="form-label">Cor</label>
-                                <input type="text" class="form-control" id="cor" name="cor" placeholder="Digite a cor" required>
-                            </div>
-
-                            <!-- Status -->
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status</label>
-                                <select class="form-select" id="status" name="status" required>
-                                    <option value="">Selecione o status</option>
-                                    <option value="disponivel">Disponível</option>
-                                    <option value="reservado">Reservado</option>
-                                    <option value="manutencao">Em Manutenção</option>
-                                    <option value="vendido">Vendido</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Observação -->
-                        <div class="mb-3">
-                            <label for="observacao" class="form-label">Observação</label>
-                            <textarea class="form-control" id="observacao" name="observacao" rows="3" placeholder="Digite uma observação"></textarea>
-
-                        </div>
-                        <br><br>
-                        <button type="submit" class="btn btn-warning w-100 fw-bold">Cadastrar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <button type="submit">Cadastrar Venda</button>
+    </form>
 </body>
 
 </html>

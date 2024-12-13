@@ -1,95 +1,45 @@
 <?php
-class Vendas
-{
+class Venda {
     private $conn;
-    private $table_name = "vendas";
 
-    public function __construct($db)
-    {
+    // Construtor da classe, conecta ao banco de dados
+    public function __construct($db) {
         $this->conn = $db;
     }
 
-    public function cadastrar( $desconto, $forma_pagamento, $valor_total, $data_venda)
-    {
-        try {
-            $query = "INSERT INTO veiculos (desconto, forma_pagamento, valor_total, data_venda) 
-                      VALUES (:desconto, :forma_pagamento, :valor_total, :data_venda)";
-            $stmt = $this->conn->prepare($query);
+    // Função para calcular o valor final com desconto
+    public function calcularValorFinal($preco, $desconto) {
+        return $preco - ($preco * $desconto / 100);
+    }
 
-            // Binding parameters
+    // Função para cadastrar a venda
+    public function cadastrarVenda($id_cliente, $id_veiculo, $desconto) {
+        // Obter o preço do veículo
+        $sql = "SELECT preco FROM veiculos WHERE id_veiculo = :id_veiculo";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id_veiculo', $id_veiculo);
+        $stmt->execute();
+        $veiculo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($veiculo) {
+            $preco = $veiculo['preco'];
+            $valor_final = $this->calcularValorFinal($preco, $desconto);
+
+            // Inserir a venda na tabela vendas
+            $sql = "INSERT INTO vendas (id_cliente, id_veiculo, desconto, valor_final) 
+                    VALUES (:id_cliente, :id_veiculo, :desconto, :valor_final)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id_cliente', $id_cliente);
+            $stmt->bindParam(':id_veiculo', $id_veiculo);
             $stmt->bindParam(':desconto', $desconto);
-            $stmt->bindParam(':forma_pagamento', $forma_pagamento);
-            $stmt->bindParam(':valor_total', $valor_total);
-            $stmt->bindParam(':data_venda', $data_venda);
+            $stmt->bindParam(':valor_final', $valor_final);
 
-            return $stmt->execute();
-        } catch (Exception $e) {
-            echo "Erro ao cadastrar venda: " . $e->getMessage();
-            return false;
+            if ($stmt->execute()) {
+                return true;
+            }
         }
+
+        return false;
     }
-    public function atualizar( $desconto, $forma_pagamento, $valor_total, $data_venda = null)
-    {
-        try {
-            $query = "UPDATE vendas SET desconto = :desconto, forma_pagamento = :forma_pagamento, valor_total = :valor_total,
-                      data_venda = :data_venda";
-
-            $query .= " WHERE id = :id";
-
-            $stmt = $this->conn->prepare($query);
-
-            $stmt->bindParam(':desconto', $desconto);
-            $stmt->bindParam(':forma_pagamento', $forma_pagamento);
-            $stmt->bindParam(':valor_total', $valor_total);
-            $stmt->bindParam(':data_venda', $data_venda);
-
-            return $stmt->execute();
-        } catch (Exception $e) {
-            echo "Erro ao atualizar vendas: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function buscarPorId($id)
-    {
-        try {
-            $query = "SELECT * FROM veiculos WHERE id = :id";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            echo "Erro ao buscar veículo: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function listarTodos()
-    {
-        try {
-            $query = "SELECT * FROM veiculos";
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            echo "Erro ao listar veículos: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function deletar($id)
-    {
-        try {
-            $query = "DELETE FROM vendas WHERE id = :id";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id', $id);
-            return $stmt->execute();
-        } catch (Exception $e) {
-            echo "Erro ao deletar venda: " . $e->getMessage();
-            return false;
-        }
-    }
-
 }
-
 ?>
