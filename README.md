@@ -1,51 +1,187 @@
-# FoxMotors - Sistema de Revenda de Veículos
+![Logo FoxMotors](images/logo.png)
 
-O **FoxMotors** é um sistema desenvolvido para a gestão de revenda de veículos, com funcionalidades para cadastrar, consultar e gerenciar clientes, veículos e vendas. A plataforma permite também o cadastro de notícias relacionadas à revenda, proporcionando uma forma eficiente de gerenciar e organizar as informações.
 
-## 💖 Proposta do Projeto
+# 🚗 **FoxMotors - Sistema de Revenda de Veículos**  
 
-O objetivo deste projeto é fornecer uma plataforma simples e eficiente para gerenciar as operações de uma revenda de veículos, incluindo:
-- Cadastro de clientes, veículos e vendas.
-- Consultas dinâmicas e interativas.
-- Gerenciamento de notícias.
-- Estrutura modular para facilitar manutenção e expansões futuras.
+O **FoxMotors** é um sistema desenvolvido para facilitar a gestão de revendas de veículos, oferecendo funcionalidades modernas para controle de clientes, veículos e vendas. Além disso, permite o gerenciamento do portfólio de veiculos, trazendo praticidade e eficiência para o seu negócio.
 
-Este projeto foi desenvolvido por **Marcelle Neves Sandy** em **novembro de 2024**.
+---
 
-## 🔧 Tecnologias Utilizadas
+## 🎯 **Objetivo do Projeto**  
 
-As principais tecnologias utilizadas são:
-- **PHP**: Responsável pelo back-end e manipulação de dados.
-- **MySQL**: Banco de dados utilizado para armazenar as informações.
-- **HTML/CSS/JavaScript**: Tecnologias para a criação da interface do usuário.
+O objetivo do **FoxMotors** é fornecer uma plataforma simples, intuitiva e completa para a administração de revendas de veículos. Focado na produtividade, o sistema permite:  
 
-## 🚀 Funcionalidades
+- 🚀 **Cadastro e gerenciamento** de clientes, veículos e vendas.  
+- 🔍 **Consultas dinâmicas** para facilitar o acesso às informações.  
+- 📍 **Busca automática de endereços** utilizando o **ViaCEP** com base no CEP.  
+- 📧 **Envio de e-mails** através do serviço **getFORM**, garantindo comunicação eficiente com os usuários.  
 
-- **Cadastro de Usuários**: Permite cadastrar e gerenciar usuários do sistema.
-- **Cadastro de Clientes**: Cadastro de clientes com dados como nome, telefone e endereço.
-- **Cadastro de Veículos**: Permite o cadastro de veículos disponíveis para venda, com detalhes como modelo, ano e preço.
-- **Cadastro de Vendas**: Registra as vendas realizadas, vinculando clientes e veículos vendidos.
-- **Consultas Dinâmicas**: Possui funcionalidades para consultar clientes, veículos e vendas.
-- **Gerenciamento de Notícias**: Permite o cadastro, edição e exclusão de notícias relacionadas à revenda de veículos.
+---
 
-## 📂 Estrutura de Pastas
+## 🛠️ **Tecnologias Utilizadas**  
 
-A estrutura do projeto está organizada da seguinte forma:
+As principais tecnologias utilizadas no desenvolvimento são:  
 
+- **PHP 8.x** - Back-end para lógica do sistema e integração com o banco de dados.  
+- **MySQL** - Banco de dados utilizado para armazenamento eficiente das informações.  
+- **HTML5 / CSS3** - Estrutura e estilização responsiva da interface.  
+- **JavaScript** - Recursos dinâmicos para interatividade do usuário.  
+- **Bootstrap 5.3** - Framework para design moderno e responsivo.  
+- **ViaCEP** - API gratuita para localização automática de endereços com base no CEP informado.  
+- **getFORM** - Ferramenta de envio de e-mails segura e rápida para recuperação de senhas e notificações.  
+
+---
+
+## ⚙️ **Funcionalidades**  
+
+O **FoxMotors** possui diversas funcionalidades que simplificam as operações diárias de uma revenda de veículos:  
+
+### **1. Gerenciamento de Clientes**  
+- 📋 Cadastro completo de clientes (nome, CPF, telefone, etc.).  
+- 🔍 Consulta e edição de dados dos clientes.  
+- 🗑️ Exclusão de clientes (com verificação de vínculos em vendas).  
+
+### **2. Gerenciamento de Veículos**  
+- 🚘 Cadastro de veículos com informações detalhadas (modelo, marca, ano, cor, preço).  
+- 📸 Upload de imagens dos veículos.  
+- 🔄 Atualização e consulta dos veículos disponíveis.  
+
+### **3. Gerenciamento de Vendas**  
+- 📝 Registro das vendas, associando clientes e veículos vendidos.  
+- 📊 Cálculo automático do valor final da venda com descontos aplicados.  
+- 🗒️ Consulta e edição de registros de vendas.  
+
+### **4. Gerenciamento de usuários**  
+- 📋 Cadastro completo de usuários (nome, e-mail, senha, etc.).  
+- 🔍 Consulta e edição de dados dos usuários.  
+- 📍 Busca automática de endereço ao informar o CEP (utilizando **ViaCEP**).  
+- 🗑️ Exclusão de usuários (com verificação de vínculos em vendas).  
+
+### **5. Autenticação de Usuários e E-mails**  
+- 🔐 Login seguro com sistema de autenticação.   
+- 🛑 Proteção de rotas administrativas contra acessos não autorizados.  
+
+---
+
+## 📁 **Estrutura do Projeto**  
+
+A estrutura do sistema está organizada de forma modular para facilitar o desenvolvimento e manutenção:  
+
+```plaintext
+ProjetoFinal_MarcelleSandy/
+│
+├── config/                # Configuração do banco de dados
+│   └── config.php
+│
+├── classes/               # Classes PHP responsáveis pela lógica do sistema
+│   ├── Cliente.php
+│   ├── Veiculo.php
+│   ├── Venda.php
+│   └── Usuario.php
+│
+├── imagens/               # Pasta para armazenar as imagens do sistema
+│
+├── uploads/               # Pasta para armazenar as imagens do sistema
+│
+├──.gitattributes                # Configurações de atributos do Git
+├──atualizarVeiculo.php          # Atualiza informações dos veículos
+├──cadastrarCliente.php          # Página para cadastro de clientes
+├──cadastrarUsuario.php          # Página para cadastro de usuários
+├──cadastrarVeiculo.php          # Página para cadastro de veículos
+├──cadastrarVenda.php            # Página para cadastro de vendas
+├──consultarCliente.php          # Página para consulta de clientes
+├──consultarUsuario.php          # Página para consulta de usuários
+├──consultarVeiculo.php          # Página para consulta de veículos
+├──consultarVendas.php           # Página para consulta de vendas
+├──deletarCliente.php            # Deleta registros de clientes
+├──deletarUsuario.php            # Deleta registros de usuários
+├──deletarVeiculo.php            # Deleta registros de veículos
+├──deletarVenda.php              # Deleta registros de vendas
+├──editarCliente.php             # Edita informações dos clientes
+├──editarUsuario.php             # Edita informações dos usuários
+├──editarVeiculo.php             # Edita informações dos veículos
+├──editarVenda.php               # Edita registros de vendas
+├──enviarEmail.php               # Envio de e-mails (integração com getFORM)
+├──form.php                      # Página de formulário
+├──index.php                     # Página inicial do sistema
+├──login.php                     # Página de login do sistema
+├──logout.php                    # Encerra a sessão do usuário
+├──portal.php                    # Painel principal do sistema
+├──README.md                     # Documentação principal do projeto
+````
+---
 
 ## 💡 Melhorias Futuras
 
-- **Autenticação de Usuário**: Implementar sistema de login com diferentes níveis de permissão.
-- **API de Integração**: Criar uma API para integrar com outras plataformas de revenda de veículos.
-- **Organização de Notícias**: Implementar categorias ou tags para facilitar a organização das notícias.
-- **Otimização do Sistema de Upload**: Melhorar o sistema de upload de imagens, com redimensionamento automático.
+- **🔒 Sistema de Permissões**: Implementar níveis de acesso (administrador, gerente, funcionário).
+- **📊 Relatórios Gerenciais**: Geração de gráficos e relatórios financeiros sobre vendas.
+- **🖼️ Otimização de Imagens**: Redimensionamento automático de imagens no upload.
 
-## 👩🏻 Autora
+---
 
-Desenvolvido por **Marcelle Neves Sandy** em **novembro de 2024**.
+## 😎 Instalação e Uso
 
-## ❤️ Contato
+### **Pré-requisitos**
 
-Para dúvidas ou sugestões, entre em contato:
+Antes de iniciar, certifique-se de ter instalado:
 
-- **E-mail**: marcellesandy3@gmail.com
+- **PHP 8.x**
+- **MySQL**
+
+---
+
+### 🚀 **Passo a Passo**
+
+1. **Clone o repositório**:
+
+   ```bash
+   git clone https://github.com/marcellenevessandy/ProjetoFinal_MarcelleSandy.git
+   cd foxmotors
+
+2. **Configure o banco de dados**:
+
+   - **Importe** o arquivo `database.sql` no **MySQL**.
+
+   - **Edite** o arquivo de configuração do banco de dados:
+     Abra o arquivo `config/config.php` e ajuste as credenciais conforme o seu ambiente:
+
+     ```php
+     <?php
+     define('DB_HOST', 'localhost'); // Host do banco de dados
+     define('DB_NAME', 'nome_do_banco'); // Nome do banco de dados
+     define('DB_USER', 'usuario'); // Usuário do banco
+     define('DB_PASS', 'senha'); // Senha do banco
+     ?>
+     ```
+3. **Inicie o servidor**:
+
+   Se estiver utilizando o servidor nativo do **PHP**, execute o seguinte comando no terminal:
+
+   ```bash
+   php -S localhost:8000
+
+4. **Acesse ao navegador**:
+http://localhost:8000
+
+---
+
+### 🎨 **Capturas de Tela**
+Tela de Login
+
+Interface simples para autenticação de usuários.
+Painel Principal
+
+Tela inicial com opções de gerenciamento de clientes, veículos e vendas.
+Cadastro de Veículos
+
+Tela para inserção de informações detalhadas sobre veículos disponíveis.
+
+---
+
+### 👤 **Autora**
+Desenvolvido com 💖 por Marcelle Neves Sandy.
+
+E-mail: marcellesandy3@gmail.com
+GitHub: github.com/marcellenevessandy
+
+
