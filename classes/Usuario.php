@@ -37,7 +37,52 @@ class Usuario
         return false; // Retorna false caso as credenciais estejam incorretas
     }
 
+    /**
+     * Verifica se um e-mail está cadastrado no banco de dados.
+     *
+     * @param string $email
+     * @return bool
+     */
+    public function verificarEmail($email)
+    {
+        $query = "SELECT id FROM " . $this->table_name . " WHERE email = :email LIMIT 1";
+        $stmt = $this->conn->prepare($query);
 
+        // Vincular o parâmetro
+        $stmt->bindParam(':email', $email);
+
+        // Executar a consulta
+        $stmt->execute();
+
+        // Verificar se o e-mail foi encontrado
+        return $stmt->rowCount() > 0;
+    }
+
+    /**
+     * Salva um token de redefinição de senha no banco de dados.
+     *
+     * @param string $email
+     * @param string $token
+     * @return bool
+     */
+    public function salvarTokenRedefinicao($email, $token)
+    {
+        $query = "UPDATE " . $this->table_name . " 
+                  SET token_redefinicao = :token, expiracao_token = :expiracao
+                  WHERE email = :email";
+        $stmt = $this->conn->prepare($query);
+
+        // Gerar uma data de expiração para o token (ex: 1 hora a partir de agora)
+        $expiracao = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+        // Vincular os parâmetros
+        $stmt->bindParam(':token', $token);
+        $stmt->bindParam(':expiracao', $expiracao);
+        $stmt->bindParam(':email', $email);
+
+        // Executar a consulta
+        return $stmt->execute();
+    }
 
     public function create($nome, $sexo, $fone, $email, $senha)
     {
@@ -83,4 +128,5 @@ class Usuario
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }

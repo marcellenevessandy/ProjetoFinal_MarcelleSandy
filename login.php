@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Armazenar dados do usuário na sessão
         $_SESSION['usuario_id'] = $usuarioLogado['id'];
         $_SESSION['usuario_nome'] = $usuarioLogado['nome'];
-    
+
         header('Location: portal.php');
         exit();
     } else {
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto d-flex align-items-center"> 
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
                     <li class="nav-item"><a class="nav-link fw-bold" href="index.php"><button class="btn btn-warning fw-bold">VOLTAR</button></a></li>
                 </ul>
             </div>
@@ -183,6 +183,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Botão de Login -->
                 <button type="submit" class="btn btn-custom w-100">Entrar</button>
+
+                <!-- Botão "Esqueci minha senha" -->
+                <div class="text-center mt-3">
+                    <a href="esqueciSenha.php" class="btn btn-link textoSobre2">Esqueci minha senha</a>
+                </div>
+
             </form>
         </div>
     </div>

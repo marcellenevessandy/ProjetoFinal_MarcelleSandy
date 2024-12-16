@@ -18,10 +18,12 @@ $usuarios = $usuario->listarTodos();
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Usuários</title>
+    <link rel="shortcut icon" href="./imagens/raposa.png" type="image/x-icon">
+    <title>Consultar Usuários</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -61,9 +63,7 @@ $usuarios = $usuario->listarTodos();
             background-color: var(--primary-color);
             border-color: var(--primary-color);
             color: var(--text-color);
-            width: 100%;
         }
-
 
         .btn-warning:hover {
             background-color: var(--hover-color);
@@ -87,12 +87,43 @@ $usuarios = $usuario->listarTodos();
             height: 3px;
             background-color: var(--primary-color);
         }
+
+        .cliente-card {
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .cliente-card h5 {
+            color: var(--primary-color);
+        }
+
+        .actions-btn {
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .cliente-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .cliente-grid {
+                display: block;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<header>
+    <header>
         <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
             <div class="container">
                 <a class="navbar-brand me-auto" href="portal.php"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
@@ -147,42 +178,34 @@ $usuarios = $usuario->listarTodos();
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container mt-5">
-        <h2 class="text-center">Lista de Usuários</h2>
+    </header><br><br>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Sexo</th>
-                    <th>Telefone</th>
-                    <th>E-mail</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($usuarios as $usuario): ?>
-                    <tr>
-                        <td><?php echo $usuario['id']; ?></td>
-                        <td><?php echo $usuario['nome']; ?></td>
-                        <td><?php echo $usuario['sexo']; ?></td>
-                        <td><?php echo $usuario['fone']; ?></td>
-                        <td><?php echo $usuario['email']; ?></td>
-                        <td>
-                            <!-- Botão de Editar -->
+    <div class="container mt-5">
+        <h2 class="text-center titulo">Lista de Usuários</h2><br><br>
+
+        <!-- Grid de Usuários -->
+        <div class="row">
+            <?php foreach ($usuarios as $usuario): ?>
+                <div class="col-md-4 col-sm-12 mb-4">
+                    <!-- Cartão de Usuário -->
+                    <div class="cliente-card">
+                        <h5 class="card-title"><strong>Nome: </strong> <?php echo $usuario['nome']; ?></h5>
+                        <p class="card-text"><strong>Sexo: </strong><?php echo $usuario['sexo']; ?></p>
+                        <p class="card-text"><strong>Telefone: </strong><?php echo $usuario['fone']; ?></p>
+                        <p class="card-text"><strong>E-mail: </strong><?php echo $usuario['email']; ?></p>
+                        <div class="actions-btn d-flex gap-2">
                             <a href="editarUsuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                            <!-- Botão de Deletar -->
-                            <a href="deletarUsuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja deletar?');">Deletar</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                            <a href="deletarUsuario.php?id=<?php echo $usuario['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja deletar?');">Excluir</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

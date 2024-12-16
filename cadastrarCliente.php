@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-warning w-100 fw-bold">Cadastrar</button>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold">Cadastrar</button><br><br>
                 </form>
             </div>
         </div>

@@ -51,7 +51,7 @@ $stmtClientes->execute();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./imagens/raposa.png" type="image/x-icon">
-    <title>Cadastrar Veículos</title>
+    <title>Cadastrar Venda</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -243,8 +243,10 @@ $stmtClientes->execute();
                                 <input class="form-control" type="text" id="valor_final" name="valor_final" readonly>
                             </div>
                         </div>
-                    </div><br><br>
+                    </div><br>
 
+
+                    
                     <button type="submit" class="btn btn-warning w-100 fw-bold">Cadastrar</button>
                 </form>
             </div>

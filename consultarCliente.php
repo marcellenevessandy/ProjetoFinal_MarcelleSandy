@@ -60,9 +60,7 @@ $clientes = $cliente->listarTodos();
             background-color: var(--primary-color);
             border-color: var(--primary-color);
             color: var(--text-color);
-            width: 100%;
         }
-
 
         .btn-warning:hover {
             background-color: var(--hover-color);
@@ -85,6 +83,37 @@ $clientes = $cliente->listarTodos();
             width: 100%;
             height: 3px;
             background-color: var(--primary-color);
+        }
+
+        .cliente-card {
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .cliente-card h5 {
+            color: var(--primary-color);
+        }
+
+        .actions-btn {
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .cliente-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .cliente-grid {
+                display: block;
+            }
         }
     </style>
 </head>
@@ -147,42 +176,26 @@ $clientes = $cliente->listarTodos();
         </nav>
     </header>
 
-    <div class="container table-container"><br><br><br>
-        <h2 class="text-center mb-4">Lista de Clientes</h2>
+<div class="container mt-5 pt-5">
+    <h2 class="titulo mb-4 text-center">Lista de Clientes</h2>
 
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>CPF</th>
-                    <th>Telefone</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($clientes as $cliente): ?>
-                    <tr>
-                        <td><?php echo $cliente['nome']; ?></td>
-                        <td><?php echo $cliente['cpf']; ?></td>
-                        <td><?php echo $cliente['telefone']; ?></td>
-                        <td class="actions-btn">
-                            <!-- Botão de Alterar -->
-                            <a href="editarCliente.php?id=<?php echo $cliente['id']; ?>" class="btn btn-warning btn-sm">
-                                Alterar
-                            </a>
-                            <!-- Botão de Excluir -->
-                            <a href="deletarCliente.php?id=<?php echo $cliente['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja deletar?');">
-                                Excluir
-                            </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+    <div class="cliente-grid">
+        <?php foreach ($clientes as $cliente): ?>
+            <div class="cliente-card">
+                <h5>Nome: <?php echo $cliente['nome']; ?></h5>
+                <p><strong>CPF:</strong> <?php echo $cliente['cpf']; ?></p>
+                <p><strong>Telefone:</strong> <?php echo $cliente['telefone']; ?></p>
+                <div class="actions-btn">
+                    <a href="editarCliente.php?id=<?php echo $cliente['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="deletarCliente.php?id=<?php echo $cliente['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja deletar?');">Excluir</a>
+                </div>
+            </div>
+        <?php endforeach; ?>
     </div>
+</div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -8,9 +8,11 @@ $veiculos = $veiculo->listarTodos();
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./imagens/raposa.png" type="image/x-icon">
     <title>Consultar Veículos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -50,9 +52,7 @@ $veiculos = $veiculo->listarTodos();
             background-color: var(--primary-color);
             border-color: var(--primary-color);
             color: var(--text-color);
-            width: 100%;
         }
-
 
         .btn-warning:hover {
             background-color: var(--hover-color);
@@ -76,12 +76,43 @@ $veiculos = $veiculo->listarTodos();
             height: 3px;
             background-color: var(--primary-color);
         }
+
+        .cliente-card {
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .cliente-card h5 {
+            color: var(--primary-color);
+        }
+
+        .actions-btn {
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .cliente-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .cliente-grid {
+                display: block;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<header>
+    <header>
         <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
             <div class="container">
                 <a class="navbar-brand me-auto" href="portal.php"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
@@ -136,39 +167,29 @@ $veiculos = $veiculo->listarTodos();
                 </div>
             </div>
         </nav>
-    </header>
-    
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Consultar Veículos</h2>
+    </header><br><br>
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Placa</th>
-                    <th>Modelo</th>
-                    <th>Preço</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($veiculos as $veiculo): ?>
-                    <tr>
-                        <td><?= $veiculo['id']; ?></td>
-                        <td><?= $veiculo['placa']; ?></td>
-                        <td><?= $veiculo['modelo']; ?></td>
-                        <td>R$ <?= number_format($veiculo['preco'], 2, ',', '.'); ?></td>
-                        <td>
-                            <a href="editarVeiculo.php?id=<?= $veiculo['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="deletarVeiculo.php?id=<?= $veiculo['id']; ?>" class="btn btn-danger btn-sm">Deletar</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+    <div class="container mt-5">
+        <h2 class="text-center titulo">Lista de Veículos</h2><br><br>
+
+        <div class="cliente-grid">
+            <?php foreach ($veiculos as $veiculo): ?>
+
+                <div class="cliente-card">
+                    <h5 class="card-title"><strong>Placa: </strong> <?php echo $veiculo['placa']; ?></h5>
+                    <p class="card-text"><strong>Modelo: </strong><?php echo $veiculo['modelo']; ?></p>
+                    <p class="card-text"><strong>R$ </strong><?= number_format($veiculo['preco'], 2, ',', '.'); ?></p>
+                    <div class="actions-btn">
+                        <a href="editarVeiculo.php?id=<?php echo $veiculo['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="deletarVeiculo.php?id=<?php echo $veiculo['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja deletar?');">Excluir</a>
+                    </div>
+                </div>
+
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
 
+</html>

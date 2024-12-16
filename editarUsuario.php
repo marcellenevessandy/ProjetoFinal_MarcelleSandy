@@ -50,7 +50,7 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./imagens/raposa.png" type="image/x-icon">
-    <title>Tenho Interesse</title>
+    <title>Editar Usuário</title>
     <!-- Link do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -62,12 +62,12 @@ if (isset($_GET['id'])) {
             --link-color: #cb640d;
             --border-color: #ff7f00;
             --hover-color: #f9bb64;
-            --azul-color: #13293e;
         }
 
         body {
             background-color: var(--background-color);
             color: var(--text-color);
+            padding-top: 70px;
         }
 
         .navbar {
@@ -98,8 +98,11 @@ if (isset($_GET['id'])) {
             border-color: var(--hover-color);
         }
 
-        .border-bottom {
-            border-color: var(--border-color);
+        .eye-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
         }
 
         .titulo {
@@ -120,19 +123,11 @@ if (isset($_GET['id'])) {
             background-color: var(--primary-color);
         }
 
-        form {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            border: none;
-            /* Removida a borda */
-        }
-
-        .form-label {
-            font-weight: bold;
-        }
-
-        .titulo {
+        .custom-text {
+            color: gray;
             text-align: center;
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -148,7 +143,7 @@ if (isset($_GET['id'])) {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex align-items-center"> <!-- Ajustado aqui -->
-                        <li class="nav-item"><a class="nav-link fw-bold" href="index.php"><button class="btn btn-warning fw-bold">VOLTAR</button></a></li>
+                        <li class="nav-item"><a class="nav-link fw-bold" href="consultarUsuario.php"><button class="btn btn-warning fw-bold">VOLTAR</button></a></li>
                     </ul>
                 </div>
             </div>
@@ -159,39 +154,46 @@ if (isset($_GET['id'])) {
 
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                
+            <div class="col-md-8">
+
+                <h2 class="titulo">Editar Usuário</h2><br><br>
                 <form method="POST">
-                <h2 class="titulo">Editar Dados de Usuário</h2>
+
                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 
-                    <!-- Nome -->
-                    <div class="mb-3">
-                        <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" value="<?php echo htmlspecialchars($row['nome']); ?>" required>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" value="<?php echo htmlspecialchars($row['nome']); ?>" required>
+                            </div>
+
+                            <!-- Sexo -->
+                            <div class="mb-3">
+                                <label for="sexo" class="form-label">Sexo</label>
+                                <select class="form-select" id="sexo" name="sexo" required>
+                                    <option value="">Selecione</option>
+                                    <option value="Masculino" <?php echo ($row['sexo'] == 'Masculino') ? 'selected' : ''; ?>>Masculino</option>
+                                    <option value="Feminino" <?php echo ($row['sexo'] == 'Feminino') ? 'selected' : ''; ?>>Feminino</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <!-- Telefone -->
+                            <div class="mb-3">
+                                <label for="fone" class="form-label">Telefone</label>
+                                <input type="text" class="form-control" id="fone" name="fone" placeholder="(XX) XXXXX-XXXX" value="<?php echo htmlspecialchars($row['fone']); ?>" required>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" value="<?php echo htmlspecialchars($row['email']); ?>" required>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Sexo -->
-                    <div class="mb-3">
-                        <label for="sexo" class="form-label">Sexo</label>
-                        <select class="form-select" id="sexo" name="sexo" required>
-                            <option value="">Selecione</option>
-                            <option value="Masculino" <?php echo ($row['sexo'] == 'Masculino') ? 'selected' : ''; ?>>Masculino</option>
-                            <option value="Feminino" <?php echo ($row['sexo'] == 'Feminino') ? 'selected' : ''; ?>>Feminino</option>
-                        </select>
-                    </div>
-
-                    <!-- Telefone -->
-                    <div class="mb-3">
-                        <label for="fone" class="form-label">Telefone</label>
-                        <input type="text" class="form-control" id="fone" name="fone" placeholder="(XX) XXXXX-XXXX" value="<?php echo htmlspecialchars($row['fone']); ?>" required>
-                    </div>
-
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">E-mail</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" value="<?php echo htmlspecialchars($row['email']); ?>" required>
-                    </div>
 
                     <!-- Nova Senha -->
                     <div class="mb-3 position-relative">
@@ -205,10 +207,10 @@ if (isset($_GET['id'])) {
                         <label for="senha_confirmacao" class="form-label">Confirmar Nova Senha</label>
                         <input type="password" class="form-control" id="senha_confirmacao" name="senha_confirmacao" placeholder="Confirme a nova senha">
                         <i id="eye-icon-confirm" class="bi bi-eye eye-icon" onclick="togglePasswordVisibility('confirm')"></i>
-                    </div>
+                    </div><br>
 
                     <!-- Botão de Enviar -->
-                    <button type="submit" class="btn btn-primary w-100">Atualizar Dados</button>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold">Atualizar Dados</button><br><br>
                 </form>
             </div>
         </div>

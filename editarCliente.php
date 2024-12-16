@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (Exception $e) {
         echo "Erro: " . $e->getMessage(); // Mensagem de erro
     }
-}?>
+} ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./imagens/raposa.png" type="image/x-icon">
-    <title>Cadastrar Usuários</title>
+    <title>Cadastrar Cliente</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons CSS -->
@@ -152,52 +152,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark d-flex align-items-center fixed-top">
             <div class="container">
-                <a class="navbar-brand me-auto" href="portal.php"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
-                <!-- Botão de alternância (hambúrguer) para dispositivos móveis -->
+                <a class="navbar-brand me-auto" href="#home"><img src="./imagens/logo.png" alt="Logo" class="img-fluid"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!-- Menu Navbar (vai ser colapsado no mobile e expandido no desktop) -->
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <!-- Opções de navegação para o desktop (visível em telas grandes) -->
-                    <ul class="navbar-nav ms-auto d-flex align-items-center d-none d-lg-flex">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Cadastrar
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
-                                <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
-                                <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
-                                <li><a class="dropdown-item" href="cadastrarVenda.php">Nova Venda</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Consultar
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
-                                <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
-                                <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
-                                <li><a class="dropdown-item" href="consultarVenda.php">Consultar Venda</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Sair -->
-                        <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
-                    </ul>
-
-                    <!-- Opções de navegação para o mobile (visível apenas em telas pequenas) -->
-                    <ul class="navbar-nav ms-auto d-flex flex-column d-lg-none">
-                        <li><a class="dropdown-item" href="cadastrarUsuario.php">Novo Usuário</a></li>
-                        <li><a class="dropdown-item" href="cadastrarCliente.php">Novo Cliente</a></li>
-                        <li><a class="dropdown-item" href="cadastrarVeiculo.php">Novo Veículo</a></li>
-                        <li><a class="dropdown-item" href="consultarUsuario.php">Consultar Usuários</a></li>
-                        <li><a class="dropdown-item" href="consultarCliente.php">Consultar Clientes</a></li>
-                        <li><a class="dropdown-item" href="consultarVeiculo.php">Consultar Veículos</a></li>
-                        <li class="nav-item"><a class="nav-link fw-bold" href="logout.php"><button class="btn btn-warning fw-bold">SAIR</button></a></li>
+                    <ul class="navbar-nav ms-auto d-flex align-items-center"> <!-- Ajustado aqui -->
+                        <li class="nav-item"><a class="nav-link fw-bold" href="consultarCliente.php"><button class="btn btn-warning fw-bold">VOLTAR</button></a></li>
                     </ul>
                 </div>
             </div>
@@ -205,89 +166,100 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
 
     <div class="container mt-5">
-        <h2 class="text-center">Editar Cliente</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="titulo">Editar Cliente</h2><br><br>
+                <form method="POST" action="editarCliente.php">
+                    <div class="row">
+                        <!-- Primeira Coluna -->
+                        <div class="col">
+                            <!-- Nome -->
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $dadosCliente['nome']; ?>" required>
+                            </div>
 
-        <form method="POST" action="editarCliente.php?id=<?php echo $id; ?>">
+                            <!-- E-mail -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $dadosCliente['email']; ?>" required>
+                            </div>
 
-            <!-- Nome -->
-            <div class="mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $dadosCliente['nome']; ?>" required>
+                            <!-- Telefone -->
+                            <div class="mb-3">
+                                <label for="telefone" class="form-label">Telefone</label>
+                                <input type="text" class="form-control" id="telefone" name="telefone" value="<?php echo $dadosCliente['telefone']; ?>" required>
+                            </div>
+
+                            <!-- CPF -->
+                            <div class="mb-3">
+                                <label for="cpf" class="form-label">CPF</label>
+                                <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $dadosCliente['cpf']; ?>" required>
+                            </div>
+
+                            <!-- Data de Nascimento -->
+                            <div class="mb-3">
+                                <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="<?php echo $dadosCliente['data_nascimento']; ?>" required>
+                            </div>
+
+                            <!-- CEP -->
+                            <div class="mb-3">
+                                <label for="cep" class="form-label">CEP</label>
+                                <input type="text" class="form-control" id="cep" name="cep" value="<?php echo $dadosCliente['cep']; ?>" required>
+                            </div>
+                        </div>
+
+                        <!-- Segunda Coluna -->
+                        <div class="col">
+                            <!-- Endereço -->
+                            <div class="mb-3">
+                                <label for="endereco" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="endereco" name="endereco" value="<?php echo $dadosCliente['endereco']; ?>" required>
+                            </div>
+
+                            <!-- Número -->
+                            <div class="mb-3">
+                                <label for="numero" class="form-label">Número</label>
+                                <input type="text" class="form-control" id="numero" name="numero" value="<?php echo $dadosCliente['numero']; ?>" required>
+                            </div>
+
+                            <!-- Complemento -->
+                            <div class="mb-3">
+                                <label for="complemento" class="form-label">Complemento</label>
+                                <input type="text" class="form-control" id="complemento" name="complemento" value="<?php echo $dadosCliente['complemento']; ?>">
+                            </div>
+
+                            <!-- Bairro -->
+                            <div class="mb-3">
+                                <label for="bairro" class="form-label">Bairro</label>
+                                <input type="text" class="form-control" id="bairro" name="bairro" value="<?php echo $dadosCliente['bairro']; ?>" required>
+                            </div>
+
+                            <!-- Cidade -->
+                            <div class="mb-3">
+                                <label for="cidade" class="form-label">Cidade</label>
+                                <input type="text" class="form-control" id="cidade" name="cidade" value="<?php echo $dadosCliente['cidade']; ?>" required>
+                            </div>
+
+                            <!-- Estado -->
+                            <div class="mb-3">
+                                <label for="estado" class="form-label">Estado</label>
+                                <select class="form-select" id="estado" name="estado" required>
+                                    <option value="<?php echo $dadosCliente['estado']; ?>" selected><?php echo $dadosCliente['estado']; ?></option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="SP">São Paulo</option>
+                                    <!-- Outros estados -->
+                                </select>
+                            </div>
+                        </div>
+                    </div><br>
+
+                    <button type="submit" class="btn btn-warning w-100 fw-bold">Atualizar</button><br><br>
+
+                </form>
             </div>
-
-            <!-- E-mail -->
-            <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo $dadosCliente['email']; ?>" required>
-            </div>
-
-            <!-- Telefone -->
-            <div class="mb-3">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" class="form-control" id="telefone" name="telefone" value="<?php echo $dadosCliente['telefone']; ?>" required>
-            </div>
-
-            <!-- CPF -->
-            <div class="mb-3">
-                <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $dadosCliente['cpf']; ?>" required>
-            </div>
-
-            <!-- Data de Nascimento -->
-            <div class="mb-3">
-                <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="<?php echo $dadosCliente['data_nascimento']; ?>" required>
-            </div>
-
-            <!-- CEP -->
-            <div class="mb-3">
-                <label for="cep" class="form-label">CEP</label>
-                <input type="text" class="form-control" id="cep" name="cep" value="<?php echo $dadosCliente['cep']; ?>" required>
-            </div>
-
-            <!-- Endereço -->
-            <div class="mb-3">
-                <label for="endereco" class="form-label">Endereço</label>
-                <input type="text" class="form-control" id="endereco" name="endereco" value="<?php echo $dadosCliente['endereco']; ?>" required>
-            </div>
-
-            <!-- Número -->
-            <div class="mb-3">
-                <label for="numero" class="form-label">Número</label>
-                <input type="text" class="form-control" id="numero" name="numero" value="<?php echo $dadosCliente['numero']; ?>" required>
-            </div>
-
-            <!-- Complemento -->
-            <div class="mb-3">
-                <label for="complemento" class="form-label">Complemento</label>
-                <input type="text" class="form-control" id="complemento" name="complemento" value="<?php echo $dadosCliente['complemento']; ?>">
-            </div>
-
-            <!-- Bairro -->
-            <div class="mb-3">
-                <label for="bairro" class="form-label">Bairro</label>
-                <input type="text" class="form-control" id="bairro" name="bairro" value="<?php echo $dadosCliente['bairro']; ?>" required>
-            </div>
-
-            <!-- Cidade -->
-            <div class="mb-3">
-                <label for="cidade" class="form-label">Cidade</label>
-                <input type="text" class="form-control" id="cidade" name="cidade" value="<?php echo $dadosCliente['cidade']; ?>" required>
-            </div>
-
-            <!-- Estado -->
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select class="form-select" id="estado" name="estado" required>
-                    <option value="<?php echo $dadosCliente['estado']; ?>" selected><?php echo $dadosCliente['estado']; ?></option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="SP">São Paulo</option>
-                    <!-- Outros estados -->
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-        </form>
+        </div>
     </div>
 
     <!-- Bootstrap JS -->

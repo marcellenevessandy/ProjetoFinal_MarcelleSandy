@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-8">
                 <h2 class="titulo">Cadastro de Veículo</h2><br><br>
 
-                <form method="POST" action="cadastrarVeiculo.php" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
 
 
                     <div class="row">
@@ -272,10 +272,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         </div>
                         <br><br>
-                        <!-- Botão de Enviar -->
-                        <button type="submit" class="btn btn-warning w-100 fw-bold">Cadastrar</button>
+                    </div><br>
 
-                    </div>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold">Cadastrar</button><br><br>
+
+
+
+
+
                 </form>
             </div>
         </div>

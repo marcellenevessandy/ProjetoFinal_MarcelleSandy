@@ -44,69 +44,78 @@ class Venda
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Função para buscar as vendas realizadas
     public function listarVendas()
     {
-        $query = "SELECT v.id, c.nome, c.cpf, ve.modelo, v.desconto, v.valor_final, v.data_venda 
-                  FROM vendas v
-                  JOIN clientes c ON v.id_cliente = c.id
-                  JOIN veiculos ve ON v.id_veiculo = ve.id";
+        $query = "SELECT 
+                       vendas.id_venda AS venda_id,
+                       clientes.nome AS cliente_nome,
+                       clientes.cpf AS cliente_cpf,
+                       veiculos.modelo AS veiculo_modelo,
+                       vendas.desconto,
+                       vendas.valor_final,
+                       vendas.data_venda
+                  FROM vendas
+                  INNER JOIN clientes ON vendas.id_cliente = clientes.id
+                  INNER JOIN veiculos ON vendas.id_veiculo = veiculos.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Função para buscar os detalhes de uma venda específica
-    public function buscarVenda($id)
+    public function buscarVenda($id_venda)
     {
-        $query = "SELECT v.id, c.nome, c.cpf, ve.modelo, v.desconto, v.valor_final, v.data_venda 
-                  FROM vendas v
-                  JOIN clientes c ON v.id_cliente = c.id
-                  JOIN veiculos ve ON v.id_veiculo = ve.id
-                  WHERE v.id = :id";
+        $query = "SELECT 
+                       vendas.id_venda AS venda_id,
+                       vendas.id_cliente,
+                       vendas.id_veiculo,
+                       clientes.nome AS cliente_nome,
+                       veiculos.modelo AS veiculo_modelo,
+                       vendas.desconto,
+                       vendas.valor_final,
+                       vendas.data_venda
+                  FROM vendas
+                  INNER JOIN clientes ON vendas.id_cliente = clientes.id
+                  INNER JOIN veiculos ON vendas.id_veiculo = veiculos.id
+                  WHERE vendas.id_venda = :id_venda";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_venda', $id_venda);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    }    
 
-    public function atualizarVenda($id, $id_cliente, $id_veiculo, $desconto)
+    public function atualizarVenda($id_venda, $id_cliente, $id_veiculo, $desconto)
     {
         // Obter o modelo e preço do veículo
         $veiculo = $this->getVeiculo($id_veiculo);
         $preco = $veiculo['preco'];
         $valorFinal = $preco - ($preco * $desconto / 100);
-
+    
         // Atualizar a venda no banco
         $query = "UPDATE vendas 
-              SET id_cliente = :id_cliente, id_veiculo = :id_veiculo, desconto = :desconto, valor_final = :valor_final 
-              WHERE id = :id";
+                  SET id_cliente = :id_cliente, 
+                      id_veiculo = :id_veiculo, 
+                      desconto = :desconto, 
+                      valor_final = :valor_final 
+                  WHERE id_venda = :id_venda";
         $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(':id', $id);
+    
+        $stmt->bindParam(':id_venda', $id_venda);
         $stmt->bindParam(':id_cliente', $id_cliente);
         $stmt->bindParam(':id_veiculo', $id_veiculo);
         $stmt->bindParam(':desconto', $desconto);
         $stmt->bindParam(':valor_final', $valorFinal);
-
+    
         return $stmt->execute();
     }
-
-    public function deletarVenda($id)
+    
+    public function deletarVenda($id_venda)
     {
-        $query = "DELETE FROM vendas WHERE id = :id";
+        $query = "DELETE FROM vendas WHERE id_venda = :id_venda";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
-
+        $stmt->bindParam(':id_venda', $id_venda);
+    
         return $stmt->execute();
     }
-
-    public function consultarTodas() {
-        $query = "SELECT * FROM vendas"; // Supondo que você tenha uma tabela 'vendas'
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-
-        // Retorna todos os resultados
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    
 }
+?>
