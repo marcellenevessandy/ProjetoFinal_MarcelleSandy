@@ -1,7 +1,5 @@
-![Logo FoxMotors](images/logo.png)
-
-
 # 🚗 **FoxMotors - Sistema de Revenda de Veículos**  
+![FoxMotors](foxmotors.png)
 
 O **FoxMotors** é um sistema desenvolvido para facilitar a gestão de revendas de veículos, oferecendo funcionalidades modernas para controle de clientes, veículos e vendas. Além disso, permite o gerenciamento do portfólio de veiculos, trazendo praticidade e eficiência para o seu negócio.
 
@@ -167,14 +165,17 @@ http://localhost:8000
 
 ### 🎨 **Capturas de Tela**
 Tela de Login
+![Login FoxMotors](login.png)
 
-Interface simples para autenticação de usuários.
-Painel Principal
+Cadastro de Usuário
+![Cadastro Usuário FoxMotors](cadUsuario.png)
 
-Tela inicial com opções de gerenciamento de clientes, veículos e vendas.
-Cadastro de Veículos
+Consulta de Clientes
+![Consulta Cliente FoxMotors](consClientes.png)
 
-Tela para inserção de informações detalhadas sobre veículos disponíveis.
+Veículos Disponíveis
+![Consulta Cliente FoxMotors](disponiveis.png)
+
 
 ---
 
@@ -182,6 +183,3 @@ Tela para inserção de informações detalhadas sobre veículos disponíveis.
 Desenvolvido com 💖 por Marcelle Neves Sandy.
 
 E-mail: marcellesandy3@gmail.com
-GitHub: github.com/marcellenevessandy
-
-
