@@ -149,7 +149,7 @@ $stmtVeiculos->execute();
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex align-items-center"> <!-- Ajustado aqui -->
-                        <li class="nav-item"><a class="nav-link fw-bold" href="consultarVendas.php"><button class="btn btn-warning fw-bold">VOLTAR</button></a></li>
+                        <li class="nav-item"><a class="nav-link fw-bold" href="consultarVenda.php"><button class="btn btn-warning fw-bold">VOLTAR</button></a></li>
                     </ul>
                 </div>
             </div>
